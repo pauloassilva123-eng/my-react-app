@@ -9,7 +9,6 @@ export default function App() {
   const [input, setInput] = useState('');
   const [time, setTime] = useState(new Date().toLocaleTimeString());
 
-  // Update clock every second
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date().toLocaleTimeString()), 1000);
     return () => clearInterval(timer);
@@ -31,64 +30,40 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col items-center p-6 font-sans">
-      {/* Header */}
-      <header className="w-full max-w-2xl text-center my-8">
-        <h1 className="text-4xl font-extrabold text-indigo-400 mb-2">Developer Focus Hub</h1>
-        <p className="text-slate-400 text-lg">Live Clock: <span className="font-mono text-indigo-300">{time}</span></p>
+    <div style={{ minHeight: '100vh', backgroundColor: '#0f172a', color: '#f8fafc', padding: '2rem', fontFamily: 'sans-serif' }}>
+      <header style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        <h1 style={{ color: '#818cf8', fontSize: '2.5rem', margin: '0 0 0.5rem 0' }}>Developer Focus Hub</h1>
+        <p style={{ color: '#94a3b8' }}>Live Clock: <span style={{ fontFamily: 'monospace', color: '#c7d2fe' }}>{time}</span></p>
       </header>
 
-      {/* Main Dashboard Card */}
-      <main className="w-full max-w-2xl bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-xl">
-        <form onSubmit={addTask} className="flex gap-2 mb-6">
+      <main style={{ maxWidth: '600px', margin: '0 auto', backgroundColor: '#1e293b', padding: '1.5rem', borderRadius: '12px', border: '1px solid #334155' }}>
+        <form onSubmit={addTask} style={{ display: 'flex', gap: '8px', marginBottom: '1.5rem' }}>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Add a new task or project objective..."
-            className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-slate-200 focus:outline-none focus:border-indigo-500"
+            placeholder="Add a new task..."
+            style={{ flex: 1, padding: '10px 14px', borderRadius: '6px', border: '1px solid #334155', backgroundColor: '#0f172a', color: '#fff', outline: 'none' }}
           />
-          <button 
-            type="submit" 
-            className="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-5 py-2 rounded-lg transition"
-          >
+          <button type="submit" style={{ backgroundColor: '#4f46e5', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}>
             Add Task
           </button>
         </form>
 
-        {/* Task List */}
-        <div className="space-y-3">
-          {tasks.length === 0 ? (
-            <p className="text-slate-500 text-center py-4">No active tasks. Add one above!</p>
-          ) : (
-            tasks.map((task) => (
-              <div 
-                key={task.id} 
-                className="flex items-center justify-between bg-slate-900/60 border border-slate-700/50 p-4 rounded-lg"
-              >
-                <div 
-                  onClick={() => toggleTask(task.id)} 
-                  className="flex items-center gap-3 cursor-pointer select-none"
-                >
-                  <input 
-                    type="checkbox" 
-                    checked={task.completed} 
-                    onChange={() => {}} 
-                    className="h-5 w-5 accent-indigo-500 rounded cursor-pointer"
-                  />
-                  <span className={task.completed ? "line-through text-slate-500" : "text-slate-200"}>
-                    {task.text}
-                  </span>
-                </div>
-                <button 
-                  onClick={() => deleteTask(task.id)}
-                  className="text-slate-500 hover:text-red-400 font-semibold px-2 transition"
-                >
-                  ✕
-                </button>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {tasks.map((task) => (
+            <div key={task.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0f172a', padding: '12px', borderRadius: '6px', border: '1px solid #334155' }}>
+              <div onClick={() => toggleTask(task.id)} style={{ cursor: 'pointer', userSelect: 'none', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <input type="checkbox" checked={task.completed} onChange={() => {}} />
+                <span style={{ textDecoration: task.completed ? 'line-through' : 'none', color: task.completed ? '#64748b' : '#f1f5f9' }}>
+                  {task.text}
+                </span>
               </div>
-            ))
-          )}
+              <button onClick={() => deleteTask(task.id)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 'bold' }}>
+                ✕
+              </button>
+            </div>
+          ))}
         </div>
       </main>
     </div>
